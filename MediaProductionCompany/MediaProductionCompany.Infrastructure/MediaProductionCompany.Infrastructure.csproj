@@ -13,7 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MediaProductionCompany.Core\MediaProductionCompany.Core.csproj" />
     <ProjectReference Include="..\MediaProductionCompany.Data\MediaProductionCompany.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
