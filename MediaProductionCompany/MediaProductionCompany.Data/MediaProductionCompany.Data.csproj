@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="DbEntity\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
 
