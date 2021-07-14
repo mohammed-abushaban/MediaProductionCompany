@@ -36,7 +36,7 @@ namespace MediaProductionCompany.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CreateCategoryDto dto)
         {
-            var category = await _categoryService.Create(string userId, dto);
+            var category = await _categoryService.Create(UserId, dto);
             return Ok(GetResponse(category, "done"));
         }
 
@@ -46,16 +46,16 @@ namespace MediaProductionCompany.API.Controllers
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody]UpdateCategoryDto dto)
         {
-            var category = await _categoryService.Edit(string userId, dto);
+            var category = await _categoryService.Edit(UserId, dto);
             return Ok(GetResponse(category, "done"));
 
         }
 
         // Delete: CategoryController/Delete/5
         [HttpDelete]
-        public async Task<IActionResult> Delete(string userId, int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            await _categoryService.Delete(id);
+            await _categoryService.Delete(UserId ,id);
             return Ok(GetResponse());
         }
     }
