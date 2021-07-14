@@ -27,12 +27,5 @@ namespace MediaProductionCompany.API.Controllers
             var result = await _authService.LoginAsync(dto);
             return Ok(GetResponse(result));
         }
-
-        [HttpPost]
-        public async Task<IActionResult> AddFCM([FromBody] string token)
-        {
-            await _authService.SaveFcmToken(token, "123");
-            return Ok(GetResponse());
-        }
     }
 }
