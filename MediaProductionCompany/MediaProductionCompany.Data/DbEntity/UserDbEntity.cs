@@ -21,6 +21,7 @@ namespace MediaProductionCompany.Data.DbEntity
         public DateTime? UpdatedAt { get; set; }
         public string DeleteUserId { get; set; }
         public DateTime? DeletedAt { get; set; }
+
         public UserType UserType { get; set; }
 
 

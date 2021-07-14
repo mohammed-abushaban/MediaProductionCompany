@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace MediaProductionCompany.API.Controllers
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BaseController : Controller
     {
+        protected string UserId = "";
         protected APIResponseVM GetResponse(object data = null, string message = "Done")
         {
             return new APIResponseVM
@@ -31,6 +33,15 @@ namespace MediaProductionCompany.API.Controllers
                 Message = message,
                 Data = null
             };
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+            if (User.Identity.IsAuthenticated)
+            {
+                UserId = User.FindFirst("UserId").Value;
+            }
         }
     }
 

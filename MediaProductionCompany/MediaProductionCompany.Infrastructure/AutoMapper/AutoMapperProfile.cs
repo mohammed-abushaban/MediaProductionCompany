@@ -16,7 +16,9 @@ namespace MediaProductionCompany.Infrastructure.AutoMapper
         {
             //CreateMap<UpdateProjectDto, ProjectDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
             CreateMap<CategoryDbEntity, CategoryVM>();
-            CreateMap<CountryDbEntity, CountryVM>();
+            CreateMap<CountryDbEntity, CountryVM>().ForMember(x => x.Language, x => x.MapFrom(y => y.Language.Name));
+            CreateMap<CountryDbEntity, CountryDetailsVM>().ForMember(x => x.Language, x => x.MapFrom(y => y.Language.Name));
+
             CreateMap<LanguageDbEntity, LanguageVM>();
             CreateMap<PortfolioDbEntity, PortfolioVM>();
             CreateMap<PortfolioTranslationDbEntity, PortfolioTranslationVM>();
