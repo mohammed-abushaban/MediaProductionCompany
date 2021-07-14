@@ -1,4 +1,5 @@
 ﻿using MediaProductionCompany.Core.Dtos;
+using MediaProductionCompany.Infrastructure.Services.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
