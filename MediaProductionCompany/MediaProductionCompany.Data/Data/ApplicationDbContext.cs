@@ -20,5 +20,16 @@ namespace MediaProductionCompany.Data
         public DbSet<PortfolioDbEntity> PortoFolios { get; set; }
         public DbSet<PortfolioTranslationDbEntity> PortoFolioTranslations { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<CategoryDbEntity>().HasQueryFilter(x => x.DeletedAt == null);
+            builder.Entity<CountryDbEntity>().HasQueryFilter(x => x.DeletedAt == null);
+            builder.Entity<LanguageDbEntity>().HasQueryFilter(x => x.DeletedAt == null);
+            builder.Entity<PortfolioDbEntity>().HasQueryFilter(x => x.DeletedAt == null);
+            builder.Entity<PortfolioTranslationDbEntity>().HasQueryFilter(x => x.DeletedAt == null);
+
+        }
     }
 }

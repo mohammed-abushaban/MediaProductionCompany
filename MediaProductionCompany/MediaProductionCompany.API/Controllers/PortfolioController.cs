@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediaProductionCompany.Core.Dtos;
+using MediaProductionCompany.Infrastructure.Services.Portfolio;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,40 +8,48 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API.Controllers
 {
-    public class PortfolioController : Controller
+    public class PortfolioController : BaseController
     {
-        // GET: PortfolioController
-        public Task<IActionResult> Index()
-        {
+        private IPortfolioService _portfolioService;
 
+        public PortfolioController(IPortfolioService portfolioService)
+        {
+            _portfolioService = portfolioService;
         }
 
-        // GET: PortfolioController/Details/5
-        public Task<IActionResult> Details(int id)
+        [HttpGet]
+        // GET: CategoryController
+        public async Task<IActionResult> Index()
         {
+            var portfolios = await _portfolioService.Index();
+            return Ok(GetResponse(portfolios, "done"));
         }
 
-        // POST: PortfolioController/Create
+        // POST: CategoryController/Create
         [HttpPost]
-        public Task<IActionResult> Create(CreatePortfolioDto dto)
+        public async Task<IActionResult> Create([FromBody]CreatePortfolioDto dto)
         {
-
+            var portfolios = await _portfolioService.Create(dto);
+            return Ok(GetResponse(portfolios, "done"));
         }
 
 
 
-        // PUT: PortfolioController/Edit
+        // PUT: CategoryController/Edit
         [HttpPut]
-        public Task<IActionResult> Edit(UpdatePortfolioDto dto)
+        public async Task<IActionResult> Edit([FromBody]UpdatePortfolioDto dto)
         {
+            var portfolios = await _portfolioService.Edit(dto);
+            return Ok(GetResponse(portfolios, "done"));
 
         }
 
-        // Delete: PortfolioController/Delete/5
+        // Delete: CategoryController/Delete/5
         [HttpDelete]
-        public Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-
+            await _portfolioService.Delete(id);
+            return Ok(GetResponse());
         }
     }
 }
