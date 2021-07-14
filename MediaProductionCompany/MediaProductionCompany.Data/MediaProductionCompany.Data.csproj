@@ -21,4 +21,8 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MediaProductionCompany.Core\MediaProductionCompany.Core.csproj" />
+  </ItemGroup>
+
 </Project>
