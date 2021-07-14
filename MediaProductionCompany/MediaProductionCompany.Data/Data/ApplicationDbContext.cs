@@ -13,18 +13,12 @@ namespace MediaProductionCompany.Data
             : base(options)
         {
         }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            builder.Entity<UserRoleDbEntity>().HasKey(x => new { x.RoleId, x.UserId});
-        }
 
         public DbSet<CategoryDbEntity> Categories { get; set; }
         public DbSet<LanguageDbEntity> Languages { get; set; }
         public DbSet<CountryDbEntity> Countries { get; set; }
         public DbSet<PortoFolioDbEntity> PortoFolios { get; set; }
         public DbSet<PortoFolioTranslationDbEntity> PortoFolioTranslations { get; set; }
-        public DbSet<RoleDbEntity> Types { get; set; }
 
     }
 }

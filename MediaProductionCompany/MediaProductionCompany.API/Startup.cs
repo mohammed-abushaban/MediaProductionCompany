@@ -1,5 +1,6 @@
 using MediaProductionCompany.API.Data;
 using MediaProductionCompany.Data;
+using MediaProductionCompany.Data.DbEntity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,8 +34,15 @@ namespace MediaProductionCompany.API
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<UserDbEntity, IdentityRole>(
+                x =>
+                {
+                    x.Password.RequireDigit = false;
+                    x.Password.RequiredUniqueChars = 0;
+                    x.Password.RequireUppercase = false;
+                    x.Password.RequireLowercase = false;
+                    x.Password.RequiredLength = 8;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //swagger
