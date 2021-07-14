@@ -1,4 +1,6 @@
-﻿using MediaProductionCompany.Core.Dtos;
+﻿using AutoMapper;
+using MediaProductionCompany.Core.Dtos;
+using MediaProductionCompany.Infrastructure.Services.Country;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,40 +9,50 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API.Controllers
 {
-    public class CountryController : Controller
+    public class CountryController : BaseController
     {
-        // GET: CountryController
-        public Task<IActionResult> Index()
-        {
 
+
+        private readonly ICountryService _countryService;
+
+        public CountryController(ICountryService countryService)
+        {
+            _countryService = countryService;
+        }
+
+        // GET: CountryController
+        [HttpGet]
+
+        public async Task<IActionResult> Index()
+        {
+            var Countries = await _countryService.Index();
+            return Ok(GetResponse(Countries));
         }
 
         // GET: CountryController/Details/5
-        public Task<IActionResult> Details(int id)
+        [HttpGet]
+
+        public async Task<IActionResult> Details(int id)
         {
+            var Country = await _countryService.Details(id);
+            return Ok(GetResponse(Country));
         }
 
         // POST: CountryController/Create
         [HttpPost]
-        public Task<IActionResult> Create(CreateCountryDto dto)
+        public async Task<IActionResult> Create(CreateCountryDto dto)
         {
+            var Country = await _countryService.Create(UserId,dto);
+            return Ok(GetResponse(Country));
 
         }
 
-
-
-        // POST: CountryController/Edit/5
-        [HttpPut]
-        public Task<IActionResult> Edit(UpdateCountryDto dto)
-        {
-
-        }
-
-        // POST: CountryController/Delete/5
+        // Delete: CountryController/Delete/5
         [HttpDelete]
-        public Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-
+            await _countryService.Delete(UserId, id);
+            return Ok(GetResponse());
         }
     }
 }

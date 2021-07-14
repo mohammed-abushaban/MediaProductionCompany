@@ -75,7 +75,7 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
              };
 
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jklfdsjklfsdjklksdfopsfiopw[osakl;"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jklfdsjklfsdjklksdfopsfiopw"));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddMonths(1);
             var accessToken = new JwtSecurityToken("https://localhost:44338/",

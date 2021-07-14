@@ -1,4 +1,7 @@
 ﻿using MediaProductionCompany.Core.Dtos;
+using MediaProductionCompany.Core.ViewModels;
+using MediaProductionCompany.Infrastructure.Services.Language;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,40 +11,34 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API.Controllers
 {
-    public class LanguageController : Controller
+    public class LanguageController : BaseController
     {
+
+        private readonly ILanguageService _languageService;
+
+        public LanguageController(ILanguageService languageService)
+        {
+            _languageService = languageService;
+        }
+
         // GET: LanguageController
-        public Task<IActionResult> Index()
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
-
+            var result = await _languageService.Index();
+            return Ok(GetResponse(result));
         }
 
-        // GET: LanguageController/Details/5
-        public Task<IActionResult> Details(int id)
-        {
-        }
 
         // POST: LanguageController/Create
         [HttpPost]
-        public Task<IActionResult> Create(CreateLanguageDto dto)
+        public async Task<IActionResult> Create([FromBody]CreateLanguageDto dto)
         {
+            var result = await _languageService.Create(UserId, dto);
+            return Ok(GetResponse(result));
 
         }
 
-
-
-        // POST: LanguageController/Edit/5
-        [HttpPut]
-        public Task<IActionResult> Edit(UpdateLanguageDto dto)
-        {
-
-        }
-
-        // POST: LanguageController/Delete/5
-        [HttpDelete]
-        public Task<IActionResult> Delete(int id, IFormCollection collection)
-        {
-
-        }
     }
 }
