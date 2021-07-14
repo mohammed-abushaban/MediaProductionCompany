@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaProductionCompany.Data.DbEntity
+namespace MediaProductionCompany.Core.Enums
 {
-    public class RoleDbEntity : BaseDbEntity
+    public enum UserType
     {
-        public string Name { get; set; }
+        Admin = 1,
+        Employee = 2
     }
 }

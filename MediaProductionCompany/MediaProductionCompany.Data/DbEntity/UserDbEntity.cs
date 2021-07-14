@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MediaProductionCompany.Core.Enums;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace MediaProductionCompany.Data.DbEntity
         public DateTime? UpdatedAt { get; set; }
         public string? DeleteUserId { get; set; }
         public DateTime? DeletedAt { get; set; }
+        public UserType UserType { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
