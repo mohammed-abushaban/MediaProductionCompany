@@ -9,8 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Exceptions\" />
-    <Folder Include="Enums\" />
     <Folder Include="Constant\" />
     <Folder Include="Resources\" />
   </ItemGroup>

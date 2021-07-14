@@ -1,6 +1,7 @@
 using MediaProductionCompany.API.Data;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
+using MediaProductionCompany.Infrastructure.AutoMapper;
 using MediaProductionCompany.Infrastructure.Services.Auth;
 using MediaProductionCompany.Infrastructure.Services.Category;
 using MediaProductionCompany.Infrastructure.Services.Country;
@@ -8,6 +9,7 @@ using MediaProductionCompany.Infrastructure.Services.File;
 using MediaProductionCompany.Infrastructure.Services.Language;
 using MediaProductionCompany.Infrastructure.Services.Portfolio;
 using MediaProductionCompany.Infrastructure.Services.PortfolioTranslation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,10 +19,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API
@@ -51,7 +55,27 @@ namespace MediaProductionCompany.API
                     x.Password.RequiredLength = 8;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
+            services.AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+              .AddJwtBearer(options =>
+              {
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuer = true,
+                      ValidateAudience = true,
+                      ValidateLifetime = true,
+                      ValidateIssuerSigningKey = true,
+                      ValidIssuer = Configuration["Jwt:Issuer"],
+                      ValidAudience = Configuration["Jwt:Issuer"],
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
+                  };
+              });
             //swagger
             services.AddSwaggerGen(c =>
             {

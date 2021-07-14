@@ -17,8 +17,4 @@
     <ProjectReference Include="..\MediaProductionCompany.Data\MediaProductionCompany.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Middleware\" />
-  </ItemGroup>
-
 </Project>
