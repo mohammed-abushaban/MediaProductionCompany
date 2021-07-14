@@ -1,6 +1,13 @@
 using MediaProductionCompany.API.Data;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
+using MediaProductionCompany.Infrastructure.Services.Auth;
+using MediaProductionCompany.Infrastructure.Services.Category;
+using MediaProductionCompany.Infrastructure.Services.Country;
+using MediaProductionCompany.Infrastructure.Services.File;
+using MediaProductionCompany.Infrastructure.Services.Language;
+using MediaProductionCompany.Infrastructure.Services.Portfolio;
+using MediaProductionCompany.Infrastructure.Services.PortfolioTranslation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -74,7 +81,13 @@ namespace MediaProductionCompany.API
                     }
                 });
             });
-
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IPortfolioService, PortfolioService>();
+            services.AddScoped<IPortfolioTranslationService, PortfolioTranslationService>();
+            services.AddSingleton<IFileService, FileService>();
             services.AddControllersWithViews();
         }
 

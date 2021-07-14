@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.Core.Dtos
 {
-    public class UpdatePortoFolioDto
+    public class UpdatePortfolioDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

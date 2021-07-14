@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.Core.Dtos
 {
-    public class UpdatePortoFolioTranslationDto
+    public class UpdatePortfolioTranslationDto
     {
         public string Title { get; set; }
         public string Description { get; set; }

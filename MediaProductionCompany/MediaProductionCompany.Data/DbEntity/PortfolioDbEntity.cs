@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.Data.DbEntity
 {
-    public class PortoFolioDbEntity : BaseDbEntity
+    public class PortfolioDbEntity : BaseDbEntity
     {
         public string Title { get; set; }
         public string UserId { get; set; }

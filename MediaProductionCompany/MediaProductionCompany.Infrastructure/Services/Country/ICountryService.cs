@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaProductionCompany.Core.Dtos
+namespace MediaProductionCompany.Infrastructure.Services.Country
 {
-    public class CreatePortoFolioDto
+    public interface ICountryService
     {
-        public string Title { get; set; }
     }
 }
