@@ -29,6 +29,7 @@ namespace MediaProductionCompany.Infrastructure.Services.User
 
         public async Task<List<UserListVM>> Index(string s)
         {
+            //TODO: Refactor
             var users = from User in _Db.Users
                         select User;
 
@@ -52,6 +53,11 @@ namespace MediaProductionCompany.Infrastructure.Services.User
 
         public async Task<UserVM> Create(string UserId, RegisterUserDto dto)
         {
+            var exists = _Db.Users.Any(x => x.Email == dto.Email || x.PhoneNumber == dto.PhoneNumber);
+            if (exists)
+            {
+                throw new DuplicateUserException();
+            }
             var user = _mapper.Map<UserDbEntity>(dto);
             user.CreatedAt = DateTime.Now;
             user.InsertUser = UserId;
@@ -68,6 +74,10 @@ namespace MediaProductionCompany.Infrastructure.Services.User
         public async Task<UserVM> Update(string UserId, UpdateUserDto dto)
         {
             var user = await _userManager.FindByIdAsync(dto.Id);
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
             _mapper.Map(dto, user);
             user.UpdatedAt = DateTime.Now;
             user.InsertUser = UserId;
@@ -79,6 +89,10 @@ namespace MediaProductionCompany.Infrastructure.Services.User
         public async Task Delete(string userId, string Id)
         {
             var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
             user.DeletedAt = DateTime.Now;
             user.DeleteUserId = userId;
             await _userManager.UpdateAsync(user);

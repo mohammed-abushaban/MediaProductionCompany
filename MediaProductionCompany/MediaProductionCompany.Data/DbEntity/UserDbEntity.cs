@@ -25,14 +25,14 @@ namespace MediaProductionCompany.Data.DbEntity
         public UserType UserType { get; set; }
 
 
-        [NotMapped]
-        public bool IsDeleted
-        {
-            get
-            {
-                return DeletedAt.HasValue;
-            }
-            set { }
-        }
+        //[NotMapped]
+        //public bool IsDeleted
+        //{
+        //    get
+        //    {
+        //        return DeletedAt.HasValue;
+        //    }
+        //    set { }
+        //}
     }
 }
