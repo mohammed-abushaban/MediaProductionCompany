@@ -34,7 +34,7 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
 
         public async Task<LoginResponseVM> LoginAsync(LoginDto dto)
         {
-            var user = _DB.Users.SingleOrDefault(x => x.UserName == dto.Username && !x.IsDeleted);
+            var user = _DB.Users.SingleOrDefault(x => x.UserName == dto.Username && x.DeletedAt == null);
 
             if (user == null)
             {

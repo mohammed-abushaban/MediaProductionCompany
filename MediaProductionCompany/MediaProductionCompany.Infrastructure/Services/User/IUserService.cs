@@ -1,5 +1,6 @@
 ﻿using MediaProductionCompany.Core.Dtos;
 using MediaProductionCompany.Core.ViewModels;
+using MediaProductionCompany.Data.DbEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

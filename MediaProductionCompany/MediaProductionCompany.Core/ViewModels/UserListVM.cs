@@ -8,6 +8,7 @@ namespace MediaProductionCompany.Core.ViewModels
 {
     public class UserListVM
     {
+        public string Id { get; set; }
         public string FullName { get; set; }
         public string InsertUser { get; set; }
         public DateTime CreatedAt { get; set; }
