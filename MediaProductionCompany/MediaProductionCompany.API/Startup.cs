@@ -1,3 +1,4 @@
+using AspNet.Security.OAuth.Validation;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
 using MediaProductionCompany.Infrastructure.AutoMapper;
@@ -56,7 +57,8 @@ namespace MediaProductionCompany.API
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-
+            services.AddAuthentication(OAuthValidationDefaults.AuthenticationScheme)
+                            .AddOAuthValidation();
             
             //swagger
             services.AddSwaggerGen(c =>
