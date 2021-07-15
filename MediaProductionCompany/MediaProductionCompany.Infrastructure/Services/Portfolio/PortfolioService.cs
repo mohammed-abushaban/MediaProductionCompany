@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediaProductionCompany.Core.Dtos;
+using MediaProductionCompany.Core.Exceptions;
 using MediaProductionCompany.Core.ViewModels;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
@@ -40,6 +41,10 @@ namespace MediaProductionCompany.Infrastructure.Services.Portfolio
         public async Task<PortfolioVM> Edit(string userId, UpdatePortfolioDto dto)
         {
             var portfolio = _Db.PortoFolios.SingleOrDefault(x => x.Id == dto.Id);
+            if (portfolio == null)
+            {
+                throw new NotFoundException();
+            }
             _mapper.Map(dto, portfolio);
             portfolio.UpdatedAt = DateTime.Now;
             portfolio.UpdateUserId = userId;
@@ -50,6 +55,10 @@ namespace MediaProductionCompany.Infrastructure.Services.Portfolio
         public async Task Delete(string userId, int Id)
         {
             var portfolio = _Db.PortoFolios.SingleOrDefault(x => x.Id == Id);
+            if (portfolio == null)
+            {
+                throw new NotFoundException();
+            }
             portfolio.DeletedAt = DateTime.Now;
             portfolio.DeleteUserId = userId;
             _Db.Update(portfolio);

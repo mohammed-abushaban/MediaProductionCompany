@@ -89,7 +89,7 @@ namespace MediaProductionCompany.Infrastructure.Services.User
             var users = from User in _Db.Users.ToList()
                         where User.FullName.StartsWith(s)
                         select User.FullName;
-            return (List<string>) users;
+            return users.ToList();
         }
     }
 }

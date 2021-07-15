@@ -29,7 +29,8 @@ namespace MediaProductionCompany.Infrastructure.Services.PortfolioTranslation
             var result = _Db.PortoFolioTranslations.WhereIf(dto.Title != null, s => s.Title.StartsWith(dto.Title))
                                                    .WhereIf(dto.Description != null, s => s.Description.Contains(dto.Description))
                                                    .WhereIf(dto.LanguageId != null, s => s.LanguageId == dto.LanguageId)
-                                                   .WhereIf(dto.CategoryId != null, s => s.CategoryId == dto.CategoryId).Take(dto.Rows).ToList();
+                                                   .WhereIf(dto.CategoryId != null, s => s.CategoryId == dto.CategoryId)
+                                                   .Take(dto.Rows).ToList();
             return _mapper.Map<List<PortfolioTranslationVM>>(result);
         }
     }
