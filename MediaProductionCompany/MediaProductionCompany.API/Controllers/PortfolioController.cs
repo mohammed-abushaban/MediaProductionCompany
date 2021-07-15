@@ -1,5 +1,6 @@
 ﻿using MediaProductionCompany.Core.Dtos;
 using MediaProductionCompany.Infrastructure.Services.Portfolio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API.Controllers
 {
+    [Authorize("Admin")]
     public class PortfolioController : BaseController
     {
         private IPortfolioService _portfolioService;
@@ -26,6 +28,7 @@ namespace MediaProductionCompany.API.Controllers
         }
        
         // POST: portfolioController/Create
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreatePortfolioDto dto)
         {
@@ -36,6 +39,7 @@ namespace MediaProductionCompany.API.Controllers
 
 
         // PUT: portfolioController/Edit
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody] UpdatePortfolioDto dto)
         {

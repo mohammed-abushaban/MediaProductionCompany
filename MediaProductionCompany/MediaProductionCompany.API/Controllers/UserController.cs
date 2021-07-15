@@ -1,5 +1,6 @@
 ﻿using MediaProductionCompany.Core.Dtos;
 using MediaProductionCompany.Infrastructure.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace MediaProductionCompany.API.Controllers
 
         // GET: UserController/Details/5
         [HttpGet]
-
+        
         public async Task<IActionResult> Details(string id)
         {
             var User = await _UserService.Details(id);

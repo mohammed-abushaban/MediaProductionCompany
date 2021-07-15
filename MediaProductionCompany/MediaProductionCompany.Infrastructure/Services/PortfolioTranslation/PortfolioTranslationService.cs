@@ -5,6 +5,7 @@ using MediaProductionCompany.Core.ViewModels;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
 using MediaProductionCompany.Infrastructure.Services.File;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,13 @@ namespace MediaProductionCompany.Infrastructure.Services.PortfolioTranslation
         private readonly ApplicationDbContext _Db;
         private readonly IMapper _mapper;
         private readonly IFileService _fileService;
+        private readonly UserManager<UserDbEntity> _UserManager;
 
-        public PortfolioTranslationService(ApplicationDbContext db, IMapper mapper, IFileService fileService)
+        public PortfolioTranslationService(ApplicationDbContext db, IMapper mapper, UserManager<UserDbEntity> UserManager)
         {
             _Db = db;
             _mapper = mapper;
-            _fileService = fileService;
+            _UserManager = UserManager;
         }
 
         public async Task<List<PortfolioTranslationVM>> Index()
@@ -55,8 +57,9 @@ namespace MediaProductionCompany.Infrastructure.Services.PortfolioTranslation
         
         public async Task<PortfolioTranslationVM> Edit(string userId, UpdatePortfolioTranslationDto dto)
         {
-            var portfolioTranslation = _Db.PortoFolioTranslations.SingleOrDefault(x => x.Id == dto.Id);
-            if (portfolioTranslation == null)
+            var portfolioTranslation = _Db.PortoFolioTranslations.Include(x => x.PortoFolio).SingleOrDefault(x => x.Id == dto.Id);
+            var user = _Db.Users.SingleOrDefault(x => x.Id == userId);
+            if (portfolioTranslation == null || !(portfolioTranslation.PortoFolio.UserId == userId && await _UserManager.IsInRoleAsync(user, "Admin")))
             {
                 throw new NotFoundException();
             }
