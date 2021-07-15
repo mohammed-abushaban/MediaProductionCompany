@@ -46,6 +46,7 @@ namespace MediaProductionCompany.Infrastructure.Services.Portfolio
                 throw new NotFoundException();
             }
             _mapper.Map(dto, portfolio);
+            portfolio.UpdatedAt = DateTime.Now;
             portfolio.UpdateUserId = userId;
             await _Db.SaveChangesAsync();
             return _mapper.Map<PortfolioVM>(portfolio);

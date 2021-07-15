@@ -1,4 +1,3 @@
-using MediaProductionCompany.API.Data;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
 using MediaProductionCompany.Infrastructure.AutoMapper;
@@ -9,6 +8,7 @@ using MediaProductionCompany.Infrastructure.Services.File;
 using MediaProductionCompany.Infrastructure.Services.Language;
 using MediaProductionCompany.Infrastructure.Services.Portfolio;
 using MediaProductionCompany.Infrastructure.Services.PortfolioTranslation;
+using MediaProductionCompany.Infrastructure.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -91,6 +91,7 @@ namespace MediaProductionCompany.API
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPortfolioService, PortfolioService>();
             services.AddScoped<IPortfolioTranslationService, PortfolioTranslationService>();
             services.AddSingleton<IFileService, FileService>();

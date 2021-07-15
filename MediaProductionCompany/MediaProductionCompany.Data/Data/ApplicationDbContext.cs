@@ -19,8 +19,6 @@ namespace MediaProductionCompany.Data
         public DbSet<CountryDbEntity> Countries { get; set; }
         public DbSet<PortfolioDbEntity> PortoFolios { get; set; }
         public DbSet<PortfolioTranslationDbEntity> PortoFolioTranslations { get; set; }
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

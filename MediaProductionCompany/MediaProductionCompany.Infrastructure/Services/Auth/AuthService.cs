@@ -1,4 +1,6 @@
-﻿using MediaProductionCompany.Core.Dtos;
+﻿using AutoMapper;
+using MediaProductionCompany.Core.Dtos;
+using MediaProductionCompany.Core.Exceptions;
 using MediaProductionCompany.Core.ViewModels;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
@@ -17,21 +19,17 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
 {
     public class AuthService : IAuthService
     {
-        private ApplicationDbContext _DB;
-        private SignInManager<UserDbEntity> _signInManager;
+        private readonly ApplicationDbContext _DB;
+        private readonly SignInManager<UserDbEntity> _signInManager;
+        private readonly UserManager<UserDbEntity> _userManager;
+        private readonly IMapper _mapper;
 
-        public AuthService(ApplicationDbContext DB, SignInManager<UserDbEntity> signInManager)
+        public AuthService(ApplicationDbContext dB, SignInManager<UserDbEntity> signInManager, UserManager<UserDbEntity> userManager, IMapper mapper)
         {
-            _DB = DB;
+            _DB = dB;
             _signInManager = signInManager;
-        }
-
-
-        public async Task SaveFcmToken(string userId)
-        {
-            var user = await _DB.Users.SingleOrDefaultAsync(x => x.Id == userId && !x.IsDeleted);
-            _DB.Users.Update(user);
-            await _DB.SaveChangesAsync();
+            _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<LoginResponseVM> LoginAsync(LoginDto dto)
@@ -40,7 +38,7 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
 
             if (user == null)
             {
-                //throw new InvalidUsernameException();
+                throw new InvalidUsernameException();
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
@@ -51,21 +49,44 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
                 _DB.SaveChanges();
 
                 var token = GenerateAccessToken(user);
-                var response = new LoginResponseVM();
-                response.Token = token;
-                response.User = new UserVM()
+                var response = new LoginResponseVM
                 {
-                    Id = user.Id,
-                    FullName = user.FullName,
-                    Email = user.Email,
-                    PhoneNumber = user.PhoneNumber,
-                    UpdatedAt = user.UpdatedAt,
+                    Token = token,
+                    User = new UserVM()
+                    {
+                        Id = user.Id,
+                        FullName = user.FullName,
+                        Email = user.Email,
+                        PhoneNumber = user.PhoneNumber,
+                        UpdatedAt = user.UpdatedAt,
+                    }
                 };
                 return response;
             }
             return null;
         }
-        private TokenVM GenerateAccessToken(UserDbEntity user)
+
+        public async Task<LoginResponseVM> SignUpAsync(RegisterUserDto dto)
+        {
+            var user = _mapper.Map<UserDbEntity>(dto);
+            user.CreatedAt = DateTime.Now;
+            var result = await _userManager.CreateAsync(user, dto.Password);
+            if (result.Succeeded)
+            {
+                var token = GenerateAccessToken(user);
+                return new LoginResponseVM
+                {
+                    Token = token,
+                    User = _mapper.Map<UserVM>(user)
+                };
+            }
+            else
+            {
+                throw new NotFoundException();
+            }
+        }
+
+        private static TokenVM GenerateAccessToken(UserDbEntity user)
         {
             var claims = new List<Claim>(){
               new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
@@ -78,18 +99,18 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jklfdsjklfsdjklksdfopsfiopw"));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddMonths(1);
-            var accessToken = new JwtSecurityToken("https://localhost:44338/",
-                "https://localhost:44338/",
+            var accessToken = new JwtSecurityToken("https://localhost:44388/",
+                "https://localhost:44388/",
                 claims,
                 expires: expires,
                 signingCredentials: credentials
             );
-
             var AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken);
-            var response = new TokenVM();
-            response.AcessToken = AccessToken;
-            response.ExpireAt = expires;
-            return response;
+            return new TokenVM
+            {
+                AcessToken = AccessToken,
+                ExpireAt = expires
+            };
         }
     }
 }
