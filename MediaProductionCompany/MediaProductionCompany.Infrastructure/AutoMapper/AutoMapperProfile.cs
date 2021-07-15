@@ -35,8 +35,7 @@ namespace MediaProductionCompany.Infrastructure.AutoMapper
             CreateMap<UpdateLanguageDto, LanguageDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
             CreateMap<UpdatePortfolioDto, PortfolioDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
             CreateMap<UpdateUserDto, UserDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
-
-            CreateMap<UpdatePortfolioTranslationDto, PortfolioTranslationDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
+            CreateMap<UpdatePortfolioTranslationDto, PortfolioTranslationDbEntity>().ForMember(x => x.Attachment, x => x.Ignore()).ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
 
 
 

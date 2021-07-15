@@ -10,5 +10,7 @@ namespace MediaProductionCompany.Infrastructure.Services.File
     public interface IFileService
     {
         Task<string> SaveFile(IFormFile file, string folderName);
+
+        Task<bool> DeleteFile(string path);
     }
 }

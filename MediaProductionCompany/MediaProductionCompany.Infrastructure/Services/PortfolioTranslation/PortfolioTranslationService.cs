@@ -44,10 +44,13 @@ namespace MediaProductionCompany.Infrastructure.Services.PortfolioTranslation
         {
             var portfolioTranslation = _mapper.Map<PortfolioTranslationDbEntity>(dto);
             portfolioTranslation.InsertUserId = userId;
-            var result = await _Db.PortoFolioTranslations.AddAsync(portfolioTranslation);
+            var x = await _fileService.SaveFile(dto.Attachment, "PortfolioTranslationFiles");
+            portfolioTranslation.Attachment = x;
+            await _Db.PortoFolioTranslations.AddAsync(portfolioTranslation);
             await _Db.SaveChangesAsync();
-            await _fileService.SaveFile(dto.Attachment, "PortfolioTranslationFiles");
-            return _mapper.Map<PortfolioTranslationVM>(result.Entity);
+            var entity = _Db.PortoFolioTranslations.Include(x => x.Language).Include(x => x.Category).SingleOrDefault(x => x.Id == portfolioTranslation.Id);
+
+            return _mapper.Map<PortfolioTranslationVM>(entity);
         }
         
         public async Task<PortfolioTranslationVM> Edit(string userId, UpdatePortfolioTranslationDto dto)
@@ -57,8 +60,13 @@ namespace MediaProductionCompany.Infrastructure.Services.PortfolioTranslation
             {
                 throw new NotFoundException();
             }
+           
+            await _fileService.DeleteFile(portfolioTranslation.Attachment);
             _mapper.Map(dto, portfolioTranslation);
             portfolioTranslation.UpdateUserId = userId;
+            var path = await _fileService.SaveFile(dto.Attachment, "PortfolioTranslationFiles");
+            portfolioTranslation.Attachment = path;
+            _Db.Update(portfolioTranslation);
             await _Db.SaveChangesAsync();
             return _mapper.Map<PortfolioTranslationVM>(portfolioTranslation);
         }

@@ -32,5 +32,17 @@ namespace MediaProductionCompany.Infrastructure.Services.File
             }
             return fileName;
         }
+
+        public async Task<bool> DeleteFile(string path)
+        {
+            //C:\ASP\MediaProductionCompany\MediaProductionCompany.API\wwwroot
+            string fileToBeDeleted = Path.Combine(_env.WebRootPath, "PortfolioTranslationFiles\\", path);
+            if ((System.IO.File.Exists(fileToBeDeleted)))
+            {
+                System.IO.File.Delete(fileToBeDeleted);
+                return true;
+            }
+            return false;
+        }
     }
 }
