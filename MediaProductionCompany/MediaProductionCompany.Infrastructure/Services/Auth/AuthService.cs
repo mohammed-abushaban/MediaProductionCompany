@@ -42,7 +42,7 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
-
+            var s = await _userManager.IsInRoleAsync(user, "Admin");
             if (result.Succeeded)
             {
                 _DB.Users.Update(user);

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace MediaProductionCompany.API.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BaseController : Controller
     {
         protected string UserId = "";

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API.Controllers
 {
-    [Authorize("Admin")]
+   //[Authorize("Admin")]
     public class LanguageController : BaseController
     {
 
@@ -24,7 +24,7 @@ namespace MediaProductionCompany.API.Controllers
 
         // GET: LanguageController
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Index()
         {
             var result = await _languageService.Index();

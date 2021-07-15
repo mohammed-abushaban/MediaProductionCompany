@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API.Controllers
 {
-    [Authorize("Admin")]
+   // [Authorize]
     public class CountryController : BaseController
     {
 
@@ -22,7 +22,7 @@ namespace MediaProductionCompany.API.Controllers
             _countryService = countryService;
         }
 
-        [Authorize]
+        //[Authorize]
         // GET: CountryController
         [HttpGet]
 
