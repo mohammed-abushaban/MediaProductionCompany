@@ -41,6 +41,7 @@ namespace MediaProductionCompany.Infrastructure.Services.Portfolio
         {
             var portfolio = _Db.PortoFolios.SingleOrDefault(x => x.Id == dto.Id);
             _mapper.Map(dto, portfolio);
+            portfolio.UpdatedAt = DateTime.Now;
             portfolio.UpdateUserId = userId;
             await _Db.SaveChangesAsync();
             return _mapper.Map<PortfolioVM>(portfolio);
