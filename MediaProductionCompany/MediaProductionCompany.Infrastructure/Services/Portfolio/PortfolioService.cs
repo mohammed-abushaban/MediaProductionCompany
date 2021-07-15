@@ -4,6 +4,7 @@ using MediaProductionCompany.Core.Exceptions;
 using MediaProductionCompany.Core.ViewModels;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,13 @@ namespace MediaProductionCompany.Infrastructure.Services.Portfolio
 
         private readonly ApplicationDbContext _Db;
         private readonly IMapper _mapper;
+        private readonly UserManager<UserDbEntity> _UserManager;
 
-        public PortfolioService(ApplicationDbContext db, IMapper mapper)
+        public PortfolioService(ApplicationDbContext db, IMapper mapper, UserManager<UserDbEntity> UserManager)
         {
             _Db = db;
             _mapper = mapper;
+            _UserManager = UserManager;
         }
 
         public async Task<List<PortfolioVM>> Index()
@@ -41,7 +44,8 @@ namespace MediaProductionCompany.Infrastructure.Services.Portfolio
         public async Task<PortfolioVM> Edit(string userId, UpdatePortfolioDto dto)
         {
             var portfolio = _Db.PortoFolios.SingleOrDefault(x => x.Id == dto.Id);
-            if (portfolio == null)
+            var user = _Db.Users.SingleOrDefault(x => x.Id == userId);
+            if (portfolio == null || !(portfolio.UserId == userId && await _UserManager.IsInRoleAsync(user ,"Admin")))
             {
                 throw new NotFoundException();
             }

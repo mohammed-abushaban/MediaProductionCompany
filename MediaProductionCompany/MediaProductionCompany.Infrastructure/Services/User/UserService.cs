@@ -30,15 +30,12 @@ namespace MediaProductionCompany.Infrastructure.Services.User
         public async Task<List<UserListVM>> Index(string s)
         {
             //TODO: Refactor
-            var users = from User in _Db.Users
-                        select User;
-
+            var users = _Db.Users.ToList();
             if (!String.IsNullOrEmpty(s))
             {
-                users = users.Where(x => x.FullName.Contains(s));
+                users = users.Where(x => x.FullName.Contains(s)).ToList();
             }
-            var result = await users.ToListAsync();
-            return _mapper.Map<List<UserListVM>>(result);
+            return _mapper.Map<List<UserListVM>>(users);
         }
 
         public async Task<UserVM> Details(string Id)
