@@ -24,6 +24,7 @@ namespace MediaProductionCompany.API.Controllers
             var result = await _authService.LoginAsync(dto);
             return Ok(GetResponse(result));
         }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> SignUp([FromBody] RegisterUserDto dto)
         {

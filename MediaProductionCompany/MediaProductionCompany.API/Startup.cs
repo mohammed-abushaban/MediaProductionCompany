@@ -57,7 +57,12 @@ namespace MediaProductionCompany.API
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
-            
+            services.AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
             //swagger
             services.AddSwaggerGen(c =>
             {
