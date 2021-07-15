@@ -18,12 +18,12 @@ namespace MediaProductionCompany.Infrastructure.AutoMapper
             CreateMap<CategoryDbEntity, CategoryVM>();
             CreateMap<CountryDbEntity, CountryVM>().ForMember(x => x.Language, x => x.MapFrom(y => y.Language.Name));
             CreateMap<CountryDbEntity, CountryDetailsVM>().ForMember(x => x.Language, x => x.MapFrom(y => y.Language.Name));
-
+            CreateMap<RegisterUserDto, UserDbEntity>();
             CreateMap<LanguageDbEntity, LanguageVM>();
             CreateMap<PortfolioDbEntity, PortfolioVM>();
             CreateMap<PortfolioTranslationDbEntity, PortfolioTranslationVM>();
             CreateMap<UserDbEntity, UserVM>();
-
+            CreateMap<UserDbEntity, UserListVM>();
             CreateMap<CreateCategoryDto, CategoryDbEntity>();
             CreateMap<CreateCountryDto, CountryDbEntity>();
             CreateMap<CreateLanguageDto, LanguageDbEntity>();
@@ -34,9 +34,9 @@ namespace MediaProductionCompany.Infrastructure.AutoMapper
             CreateMap<UpdateCountryDto, CountryDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
             CreateMap<UpdateLanguageDto, LanguageDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
             CreateMap<UpdatePortfolioDto, PortfolioDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
+            CreateMap<UpdateUserDto, UserDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
+
             CreateMap<UpdatePortfolioTranslationDto, PortfolioTranslationDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
-
-
 
         }
 

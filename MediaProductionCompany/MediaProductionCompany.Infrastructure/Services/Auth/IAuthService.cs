@@ -11,7 +11,6 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
     public interface IAuthService
     {
         Task<LoginResponseVM> LoginAsync(LoginDto dto);
-
-        Task SaveFcmToken(string userId);
+        Task<LoginResponseVM> SignUpAsync(RegisterUserDto dto);
     }
 }
