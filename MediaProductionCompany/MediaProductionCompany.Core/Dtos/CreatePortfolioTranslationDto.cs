@@ -14,5 +14,8 @@ namespace MediaProductionCompany.Core.Dtos
         public IFormFile Attachment { get; set; }
         public int CategoryId { get; set; }
         public int LanguageId { get; set; }
+
+        public int PortoFolioId { get; set; }
+
     }
 }

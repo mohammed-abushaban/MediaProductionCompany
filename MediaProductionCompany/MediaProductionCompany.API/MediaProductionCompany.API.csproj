@@ -21,4 +21,8 @@
     <ProjectReference Include="..\MediaProductionCompany.Infrastructure\MediaProductionCompany.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\PortfolioTranslationFiles\" />
+  </ItemGroup>
+
 </Project>

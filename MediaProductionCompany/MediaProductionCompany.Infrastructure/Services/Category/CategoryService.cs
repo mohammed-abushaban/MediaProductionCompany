@@ -31,7 +31,12 @@ namespace MediaProductionCompany.Infrastructure.Services.Category
 
         public async Task<CategoryVM> Details(int Id)
         {
-            return _mapper.Map<CategoryVM>(_Db.Categories.SingleOrDefault(x => x.Id == Id));
+            var category = _Db.Categories.SingleOrDefault(x => x.Id == Id);
+            if (category == null)
+            {
+                throw new NotFoundException();
+            }
+            return _mapper.Map<CategoryVM>(category);
         }
         public async Task<CategoryVM> Create(string userId ,CreateCategoryDto dto)
         {
@@ -44,6 +49,10 @@ namespace MediaProductionCompany.Infrastructure.Services.Category
         public async Task<CategoryVM> Edit(string userId, UpdateCategoryDto dto)
         {
             var category = _Db.Categories.SingleOrDefault(x => x.Id == dto.Id);
+            if (category == null)
+            {
+                throw new NotFoundException();
+            }
             _mapper.Map(dto, category);
             category.UpdateUserId = userId;
             await _Db.SaveChangesAsync();
@@ -53,6 +62,10 @@ namespace MediaProductionCompany.Infrastructure.Services.Category
         public async Task Delete(string userId ,int Id)
         {
             var category = _Db.Categories.SingleOrDefault(x => x.Id == Id);
+            if (category == null)
+            {
+                throw new NotFoundException();
+            }
             category.DeletedAt = DateTime.Now;
             category.DeleteUserId = userId;
             _Db.Update(category);

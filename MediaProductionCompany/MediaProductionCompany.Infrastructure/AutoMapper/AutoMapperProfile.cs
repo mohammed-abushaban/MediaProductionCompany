@@ -2,6 +2,7 @@
 using MediaProductionCompany.Core.Dtos;
 using MediaProductionCompany.Core.ViewModels;
 using MediaProductionCompany.Data.DbEntity;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace MediaProductionCompany.Infrastructure.AutoMapper
 {
     public class AutoMapperProfile : Profile
     {
+
         public AutoMapperProfile()
         {
             //CreateMap<UpdateProjectDto, ProjectDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
@@ -21,14 +23,14 @@ namespace MediaProductionCompany.Infrastructure.AutoMapper
 
             CreateMap<LanguageDbEntity, LanguageVM>();
             CreateMap<PortfolioDbEntity, PortfolioVM>();
-            CreateMap<PortfolioTranslationDbEntity, PortfolioTranslationVM>();
-            CreateMap<UserDbEntity, UserVM>();
+            CreateMap<PortfolioTranslationDbEntity, PortfolioTranslationVM>().ForMember(x => x.Language, x => x.MapFrom(y => y.Language.Name))
+                .ForMember(x => x.Category, x => x.MapFrom(y => y.Category.Name));
 
             CreateMap<CreateCategoryDto, CategoryDbEntity>();
             CreateMap<CreateCountryDto, CountryDbEntity>();
             CreateMap<CreateLanguageDto, LanguageDbEntity>();
             CreateMap<CreatePortfolioDto, PortfolioDbEntity>();
-            CreateMap<CreatePortfolioTranslationDto, PortfolioTranslationDbEntity>();
+            CreateMap<CreatePortfolioTranslationDto, PortfolioTranslationDbEntity>().ForMember(x => x.Attachment, x => x.Ignore());
 
             CreateMap<UpdateCategoryDto, CategoryDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));
             CreateMap<UpdateCountryDto, CountryDbEntity>().ForAllMembers(opt => opt.Condition((src, dest, sourcrMember) => sourcrMember != null));

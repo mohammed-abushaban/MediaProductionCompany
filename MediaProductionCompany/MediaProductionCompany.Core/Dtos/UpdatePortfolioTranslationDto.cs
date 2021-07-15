@@ -9,6 +9,7 @@ namespace MediaProductionCompany.Core.Dtos
 {
     public class UpdatePortfolioTranslationDto
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public IFormFile Attachment { get; set; }
