@@ -25,11 +25,12 @@ namespace MediaProductionCompany.Infrastructure.Services.PortfolioTranslation
         private readonly IFileService _fileService;
         private readonly UserManager<UserDbEntity> _UserManager;
 
-        public PortfolioTranslationService(ApplicationDbContext db, IMapper mapper, UserManager<UserDbEntity> UserManager)
+        public PortfolioTranslationService(ApplicationDbContext db, IMapper mapper, UserManager<UserDbEntity> UserManager, IFileService fileService)
         {
             _Db = db;
             _mapper = mapper;
             _UserManager = UserManager;
+            _fileService = fileService;
         }
 
         public async Task<List<PortfolioTranslationVM>> Index()

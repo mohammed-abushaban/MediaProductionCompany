@@ -98,6 +98,7 @@ namespace MediaProductionCompany.API
             services.AddScoped<IPortfolioTranslationService, PortfolioTranslationService>();
             services.AddSingleton<IFileService, FileService>();
             services.AddControllersWithViews();
+            services.AddApplicationInsightsTelemetry();
         }
 
 
