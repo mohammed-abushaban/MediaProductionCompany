@@ -1,6 +1,7 @@
 ﻿using MediaProductionCompany.Core.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API.Controllers
 {
+    [EnableCors]
     [Route("api/[controller]/[action]")]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BaseController : Controller
