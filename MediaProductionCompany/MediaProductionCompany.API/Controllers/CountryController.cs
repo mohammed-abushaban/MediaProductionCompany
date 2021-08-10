@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace MediaProductionCompany.API.Controllers
 {
-   // [Authorize]
     public class CountryController : BaseController
     {
 
