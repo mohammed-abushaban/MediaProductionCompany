@@ -19,8 +19,10 @@ namespace MediaProductionCompany.API.Controllers
         {
             _categoryService = categoryService;
         }
-        [AllowAnonymous]
+        
+
         [HttpGet]
+        [Authorize (Roles = "Admin")]
         // GET: CategoryController
         public async Task<IActionResult> Index()
         {

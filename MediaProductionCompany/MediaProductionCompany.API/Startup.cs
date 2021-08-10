@@ -2,6 +2,7 @@ using AspNet.Security.OAuth.Validation;
 using MediaProductionCompany.Data;
 using MediaProductionCompany.Data.DbEntity;
 using MediaProductionCompany.Infrastructure.AutoMapper;
+using MediaProductionCompany.Infrastructure.Middleware;
 using MediaProductionCompany.Infrastructure.Services.Auth;
 using MediaProductionCompany.Infrastructure.Services.Category;
 using MediaProductionCompany.Infrastructure.Services.Country;
@@ -57,9 +58,24 @@ namespace MediaProductionCompany.API
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-            services.AddAuthentication(OAuthValidationDefaults.AuthenticationScheme)
-                            .AddOAuthValidation();
-            
+            services.AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+              .AddJwtBearer(options =>
+              {
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuer = false,
+                      ValidateAudience = false,
+                      ValidateLifetime = true,
+                      ValidateIssuerSigningKey = true,
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
+                  };
+              });
+
             //swagger
             services.AddSwaggerGen(c =>
             {
@@ -89,6 +105,7 @@ namespace MediaProductionCompany.API
                     }
                 });
             });
+
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICountryService, CountryService>();
@@ -120,6 +137,10 @@ namespace MediaProductionCompany.API
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors(x => x
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -137,6 +158,9 @@ namespace MediaProductionCompany.API
             //        pattern: "{controller=Home}/{action=Index}/{id?}");
             //    endpoints.MapRazorPages();
             //});
+
+            //app.UseExceptionHandler(opts => opts.UseMiddleware<ExceptionHandler>());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
