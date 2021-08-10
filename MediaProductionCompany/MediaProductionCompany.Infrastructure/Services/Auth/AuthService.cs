@@ -63,7 +63,7 @@ namespace MediaProductionCompany.Infrastructure.Services.Auth
                 };
                 return response;
             }
-            return null;
+            throw new InvalidUsernameException();
         }
 
         public async Task<LoginResponseVM> SignUpAsync(RegisterUserDto dto)
