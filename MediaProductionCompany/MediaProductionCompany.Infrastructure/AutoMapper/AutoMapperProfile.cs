@@ -20,6 +20,7 @@ namespace MediaProductionCompany.Infrastructure.AutoMapper
             CreateMap<CountryDbEntity, CountryDetailsVM>().ForMember(x => x.Language, x => x.MapFrom(y => y.Language.Name));
             CreateMap<RegisterUserDto, UserDbEntity>();
             CreateMap<UserDbEntity, UserVM>();
+            CreateMap<UserDbEntity, UserListVM>();
             CreateMap<LanguageDbEntity, LanguageVM>();
             CreateMap<PortfolioDbEntity, PortfolioVM>();
             CreateMap<PortfolioTranslationDbEntity, PortfolioTranslationVM>().ForMember(x => x.Language, x => x.MapFrom(y => y.Language.Name))

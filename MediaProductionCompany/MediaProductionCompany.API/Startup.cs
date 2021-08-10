@@ -47,6 +47,7 @@ namespace MediaProductionCompany.API
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+            
             services.AddIdentity<UserDbEntity, IdentityRole>(
                 x =>
                 {
@@ -56,6 +57,7 @@ namespace MediaProductionCompany.API
                     x.Password.RequireLowercase = false;
                     x.Password.RequiredLength = 8;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             services.AddAuthentication(config =>
