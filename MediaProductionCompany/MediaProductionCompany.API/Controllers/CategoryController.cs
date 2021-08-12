@@ -22,7 +22,7 @@ namespace MediaProductionCompany.API.Controllers
         
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         // GET: CategoryController
         public async Task<IActionResult> Index()
         {

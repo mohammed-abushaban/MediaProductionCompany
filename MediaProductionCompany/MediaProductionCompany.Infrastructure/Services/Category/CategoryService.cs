@@ -26,6 +26,7 @@ namespace MediaProductionCompany.Infrastructure.Services.Category
 
         public async Task<List<CategoryVM>> Index()
         {
+
             return _mapper.Map<List<CategoryVM>>(_Db.Categories.ToList());
         }
 
